@@ -1,12 +1,19 @@
 # src-ctt-server-ui
 
-Admin Dashboard template made with Vue and Vuetify framework
+Dashboard utilisant l'api deno
 
-User interface for Rest back-end builded with deno
+Basé sur Vue et Vuetify avec :
+
+- Conso API axios
+- State avec VueX
+- SPA avec Vue router
 
 ## Requirements
 
-> Please download &rarr; [`yarn`](https://classic.yarnpkg.com/fr/docs/install/)
+> Merci d'installer les même version exactes à la mineure près
+
+- `yarn` 1.22.4 &rarr; [download](https://classic.yarnpkg.com/fr/docs/install/)
+- `node` 14.2.0
 
 ## Project setup
 

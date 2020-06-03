@@ -3,6 +3,7 @@ import axios from 'axios'
 const singleton = Symbol('apiCtt')
 const singletonEnforcer = Symbol('apiCttEnforcer')
 
+// TODO : use for security (need back end)
 // function readCookie(name) {
 //   const match = document.cookie.match(
 //     new RegExp('(^|;\\s*)(' + name + ')=([^;]*)')
