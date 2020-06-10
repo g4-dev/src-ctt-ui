@@ -11,29 +11,29 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
     path: '/access',
     name: 'Access',
-    component: Access
+    component: Access,
   },
   {
     path: '/transcript/show/:id',
     name: 'TranscriptShow',
-    component: TranscriptShow
+    component: TranscriptShow,
   },
   {
     path: '*',
     name: 'NotFound',
-    component: NotFound
-  }
+    component: NotFound,
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
 
 export default router

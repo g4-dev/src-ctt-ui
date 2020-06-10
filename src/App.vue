@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import Navbar from '@/views/components/Navbar.vue'
+import Navbar from '@/components/Navbar.vue'
 export default {
   name: 'App',
   components: {
@@ -17,18 +17,13 @@ export default {
   computed: {
     theme() {
       return this.$vuetify.theme.dark ? 'dark' : 'light'
-    }
+    },
   },
   data() {
     return {
-      items: [
-        { title: 'Add New User', icon: 'las la-user-plus' },
-        { title: 'Update User Details', icon: 'las la-user-edit' },
-        { title: 'Update User Details', icon: 'las la-user' }
-      ],
-      right: null
+      right: null,
     }
-  }
+  },
 }
 </script>
 

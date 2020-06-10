@@ -7,7 +7,7 @@ Vue.use(Vuetify)
 
 export default new Vuetify({
   icons: {
-    iconfont: 'las' // default - only for display purposes
+    iconfont: 'las', // default - only for display purposes
   },
   theme: {
     light: {
@@ -15,14 +15,14 @@ export default new Vuetify({
       secondary: '#b0bec5',
       accent: '#8c9eff',
       error: '#b71c1c',
-      background: colors.grey.lighten5
+      background: colors.grey.lighten5,
     },
     dark: {
       primary: colors.blue,
       secondary: '#b0bec5',
       accent: '#8c9eff',
       error: '#b71c1c',
-      background: colors.grey.darken4
-    }
-  }
+      background: colors.grey.darken4,
+    },
+  },
 })
