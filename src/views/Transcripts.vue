@@ -1,76 +1,61 @@
 <template>
-  <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <h1>Call2Text</h1>
-      </v-col>
-
-      <v-col class="mb-4">
-        <h1 class="display-1 font-weight-bold mb-3">Welcome to Call2Text</h1>
-
-        <p class="subheading font-weight-regular">
-          Here sould have list of transcripts
-        </p>
-      </v-col>
-    </v-row>
-  </v-container>
+  <div class="box">
+    <Transcript
+      v-for="transcript in transcripts"
+      v-bind:transcript="transcript"
+      :key="transcript"
+    >
+    </Transcript>
+  </div>
 </template>
 
 <script>
+import Transcript from '@/components/Transcript'
+
 export default {
   name: 'Transcripts',
+  components: { Transcript },
 
-  data: () => ({
-    ecosystem: [
-      {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader'
-      },
-      {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify'
-      },
-      {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify'
-      }
-    ],
-    importantLinks: [
-      {
-        text: 'Documentation',
-        href: 'https://vuetifyjs.com'
-      },
-      {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com'
-      },
-      {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify'
-      },
-      {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs'
-      },
-      {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify'
-      }
-    ],
-    whatsNext: [
-      {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer'
-      },
-      {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/layout/pre-defined'
-      },
-      {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions'
-      }
-    ]
-  })
+  data() {
+    return {
+      transcripts: [
+        {
+          id: '1',
+          date: '16-10-2020',
+          message:
+            'test testtest testtesttesttesttesttest testtesttesttest testtesttesttesttesttest test test test 1',
+        },
+        {
+          id: '2',
+          date: '16-10-2020',
+          message:
+            'test testtest testtesttesttesttesttest testtesttesttest testtesttesttesttesttest 2',
+        },
+        {
+          id: '3',
+          date: '16-10-2020',
+          message:
+            'test testtest testtesttesttesttesttest testtesttesttest testtesttesttesttesttest 3',
+        },
+        {
+          id: '4',
+          date: '16-10-2020',
+          message:
+            'test testtest testtesttesttesttesttest testtesttesttest testtesttesttesttesttest 4',
+        },
+      ],
+    }
+  },
+  mounted() {
+    localStorage.removeItem('transcript')
+  },
 }
 </script>
+
+<style>
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+</style>

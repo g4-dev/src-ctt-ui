@@ -8,7 +8,7 @@ import Transcripts from '@/views/Transcripts.vue'
 export default {
   name: 'Home',
   components: {
-    Transcripts
-  }
+    Transcripts,
+  },
 }
 </script>

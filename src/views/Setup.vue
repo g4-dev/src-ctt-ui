@@ -5,7 +5,7 @@
 <script>
 // Composant wizard d'initialisation de l'application
 export default {
-  name: 'Setup'
+  name: 'Setup',
 }
 </script>
 
