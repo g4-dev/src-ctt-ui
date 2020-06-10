@@ -11,16 +11,18 @@ const singletonEnforcer = Symbol('apiCttEnforcer')
 //   return match ? decodeURIComponent(match[3]) : null
 // }
 
+const baseURL = 'localhost:8081'
+
 class ApiService {
   constructor(enforcer) {
     if (enforcer !== singletonEnforcer) {
       throw new Error('Cannot construct singleton')
     }
 
-    console.log(`API Service for ${location.protocol}//${location.host}/api`)
+    console.log(`API Service for ctt : localhost:8081`)
 
     this.session = axios.create({
-      baseURL: `${location.protocol}//${location.host}/api`,
+      baseURL: baseURL,
       headers: {
         'X-Requested-With': 'XMLHttpRequest'
         //'X-CSRFToken': readCookie('csrftoken')
