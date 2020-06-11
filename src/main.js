@@ -13,7 +13,15 @@ new Vue({
   store,
   vuetify,
   beforeMount() {
-    console.log(api.get('/transcripts'))
+    // TODO: Example requests
+    // api
+    //   .auth({
+    //     name: 'user_tess',
+    //     token: '3553d7ad-72e3-4f2d-b75c-862082ddb15e',
+    //   })
+    //   .then((val) => console.log(val))
+    //   .catch((err) => console.error('err auth', err))
+    // api.get('/transcripts').then((val) => console.log('trabs', val))
   },
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount('#app')

@@ -1,25 +1,30 @@
-const path = require('path')
 module.exports = {
   transpileDependencies: ['vuetify'],
-  publicPath: process.env.NODE_ENV === 'production' ? '/ctt-ui/' : '/',
+  publicPath:
+    process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_URL : '/',
   css: {
     requireModuleExtension: true,
     loaderOptions: {
       css: {
         modules: {
-          localIdentName: '[name]-[hash]'
+          localIdentName: '[name]-[hash]',
         },
-        localsConvention: 'camelCaseOnly'
-      }
-    }
-  },
-  pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'scss',
-      patterns: [path.resolve(__dirname, './src/assets/sass/main.scss')]
-    }
+        localsConvention: 'camelCaseOnly',
+      },
+    },
   },
   devServer: {
-    proxy: 'http://localhost:8080'
-  }
+    proxy: {
+      '/api': {
+        target: process.env.VUE_APP_API,
+        changeOrigin: true,
+        secure: false,
+        cookieDomainRewrite: '',
+        onProxyReq: function (request, req) {
+          req.setHeader('origin', process.env.VUE_APP_BASE_URL)
+        },
+      },
+    },
+    disableHostCheck: true,
+  },
 }

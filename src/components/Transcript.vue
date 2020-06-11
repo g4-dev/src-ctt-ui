@@ -11,7 +11,7 @@
 
       <div class="js-transcripts-card-content">
         <p>{{ transcript.id }}</p>
-        <p>{{ transcript.date }}</p>
+        <p>{{ transcript.created_at }}</p>
       </div>
     </v-card>
   </div>
@@ -25,9 +25,8 @@ export default {
       icon: 'mdi-eye',
     }
   },
-  props: ['transcript'],
-  mounted() {
-    console.log('test')
+  props: {
+    transcript: Object,
   },
   methods: {
     click(transcript) {

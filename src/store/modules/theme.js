@@ -1,10 +1,10 @@
 export const THEMES = {
   dark: 'dark',
-  light: 'light'
+  light: 'light',
 }
 
 const state = {
-  theme: THEMES.light
+  theme: THEMES.light,
 }
 
 const actions = {
@@ -12,12 +12,12 @@ const actions = {
     commit('init', data)
     commit('setTheme', theme)
     commit('setAllowedTypes', allowedTypes)
-  }
+  },
 }
 
 const getters = {
   isDefaultTheme: ({ theme }) => theme === theme.dark,
-  isLightTheme: (state, getters) => !getters.isDefaultTheme
+  isLightTheme: (state, getters) => !getters.isDefaultTheme,
 }
 
 const mutations = {
@@ -30,7 +30,7 @@ const mutations = {
   },
   setAllowedTypes(state, allowedTypes) {
     state.allowedTypes = allowedTypes
-  }
+  },
 }
 
 export default {
@@ -38,5 +38,5 @@ export default {
   getters,
   state,
   actions,
-  mutations
+  mutations,
 }
