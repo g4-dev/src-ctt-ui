@@ -5,6 +5,7 @@ import TranscriptShow from '../views/TranscriptShow.vue'
 import Access from '../views/ApiKeys.vue'
 import NotFound from '../views/error/NotFound.vue'
 import Login from '../views/VLogin.vue'
+import Setup from '../views/VSetup.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,10 @@ const routes = [
   {
     path: '/login',
     component: Login,
+  },
+  {
+    path: '/setup',
+    component: Setup,
   },
   {
     path: '*',
