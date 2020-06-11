@@ -12,6 +12,12 @@
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-text-field
+                v-model="name"
+                :rules="nameRules"
+                label="Nom"
+                required
+              />
+              <v-text-field
                 v-model="key"
                 :rules="keyRules"
                 label="Clé d'accès"
@@ -37,6 +43,12 @@ export default {
     key: '',
     valid: true,
     alert: false,
+    name: '',
+    nameRules: [
+      (v) => !!v || 'Le nom est requis',
+      (v) =>
+        (v && v.length >= 4) || 'Le nom doit être supérieur à 4 caractères',
+    ],
     keyRules: [
       (v) => !!v || 'La clé est requise',
       (v) =>
@@ -46,7 +58,7 @@ export default {
   methods: {
     validate() {
       if (this.$refs.form.validate()) {
-        if (this.key == 'coucou12345') {
+        if (this.name == 'Coco' && this.key == 'coucou12345') {
           this.$router.push('/')
         } else {
           this.alert = true
