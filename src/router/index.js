@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import TranscriptShow from '../views/TranscriptShow.vue'
 import Access from '../views/ApiKeys.vue'
 import NotFound from '../views/error/NotFound.vue'
+import Login from '../views/VLogin.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,10 @@ const routes = [
     path: '/transcript/show/:id',
     name: 'TranscriptShow',
     component: TranscriptShow,
+  },
+  {
+    path: '/login',
+    component: Login,
   },
   {
     path: '*',
