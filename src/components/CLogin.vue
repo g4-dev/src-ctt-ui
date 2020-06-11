@@ -35,6 +35,7 @@
 export default {
   data: () => ({
     key: '',
+    valid: true,
     alert: false,
     keyRules: [
       (v) => !!v || 'La clé est requise',
