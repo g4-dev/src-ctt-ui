@@ -1,15 +1,15 @@
 <template>
-  <div class="Login">
-    <Login />
+  <div class="Setup">
+    <Setup />
   </div>
 </template>
 
 <script>
-import Login from '@/components/CLogin.vue'
+import Setup from '@/components/CSetup.vue'
 
 export default {
   components: {
-    Login,
+    Setup,
   },
 }
 </script>
