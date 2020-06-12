@@ -16,7 +16,7 @@ const actions = {
 }
 
 const getters = {
-  isDefaultTheme: ({ theme }) => theme === theme.dark,
+  isDefaultTheme: ({ theme }) => theme === THEMES.dark,
   isLightTheme: (state, getters) => !getters.isDefaultTheme,
 }
 

@@ -35,17 +35,15 @@ class ApiService {
   patch = (...params) => this.session.patch(...params)
   remove = (...params) => this.session.delete(...params)
 
-  auth({ name, token }) {
-    return this.post(
-      'login',
-      {},
-      {
-        auth: {
-          token: token,
-          name: name,
-        },
-      }
-    )
+  async auth({ name, token }) {
+    const payload = await this.post('login', {
+      token: token,
+      name: name,
+    })
+
+    this.session.defaults.headers.common['Authorization'] = payload.data.token
+
+    return payload
   }
 }
 

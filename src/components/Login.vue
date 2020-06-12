@@ -18,7 +18,7 @@
                 required
               />
               <v-text-field
-                v-model="key"
+                v-model="token"
                 :rules="keyRules"
                 label="Clé d'accès"
                 append-icon="mdi-arrow-right-bold-circle-outline"
@@ -38,12 +38,15 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+import api from '@/api'
+
 export default {
   data: () => ({
-    key: '',
     valid: true,
     alert: false,
     name: '',
+    token: '',
     nameRules: [
       (v) => !!v || 'Le nom est requis',
       (v) =>
@@ -55,10 +58,16 @@ export default {
         (v && v.length >= 10) || 'La clé doit être supérieure à 10 caractères',
     ],
   }),
+  created() {
+    console.log(this)
+  },
   methods: {
+    ...mapMutations('auth', ['loginAction']),
     validate() {
       if (this.$refs.form.validate()) {
-        if (this.name == 'Coco' && this.key == 'coucou12345') {
+        const data = api.auth({ name: this.name, token: this.token })
+        if (data) {
+          this.loginAction(data)
           this.$router.push('/')
         } else {
           this.alert = true

@@ -1,34 +1,31 @@
-import api from '@/api'
-
 const state = {
-  user: {},
+  token: '',
+  expire: 0,
   isLogged: false,
 }
 
 const actions = {
-  import({ commit }, { user, ...data } = null) {
+  import({ commit }, data) {
+    console.log(data)
     commit('loginAction', data)
-    commit('isLogged', data)
-    commit('userInfo', user)
+    commit('disconnectAction', data)
   },
 }
 
 const getters = {
-  isLogged: () => this.isLogged === true,
-  userInfo: () => this.user,
+  isLogged: (state) => state.isLogged === true, // TODO enchance this function with expire mathematics
 }
 
 const mutations = {
-  loginAction(state, { token, name }) {
-    api
-      .auth({ name, token })
-      .then((data) => {
-        console.log(data)
-        state.user = { token: token, name: name }
-      })
-      .catch(() => {
-        state.isLogged = false
-      })
+  loginAction(state, { token, expire }) {
+    state.isLogged = true
+    state.token = token
+    state.expire = expire
+  },
+  disconnectAction(state) {
+    state.isLogged = false
+    state.token = ''
+    state.expire = ''
   },
 }
 
