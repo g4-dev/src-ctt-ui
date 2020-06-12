@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-text-field :value="keyItem.key" solo disabled></v-text-field>
+    <v-text-field
+            :value="keyItem.key"
+            append-icon="mdi-delete"
+            solo
+            @click:append="deleteKey"
+    >
+    </v-text-field>
   </div>
 </template>
 
@@ -8,7 +14,14 @@
 export default {
   name: 'Keys',
   props: ['keyItem'],
+  methods: {
+    deleteKey () {
+      alert('click:append')
+    },
+  },
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
