@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import colors from 'vuetify/lib/util/colors'
-import 'line-awesome/dist/font-awesome-line-awesome/css/all.css'
+import '@mdi/font/css/materialdesignicons.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.use(Vuetify)
 
 export default new Vuetify({
   icons: {
-    iconfont: 'las', // default - only for display purposes
+    iconfont: 'mdiSvg' // default - only for display purposes
   },
   theme: {
     light: {

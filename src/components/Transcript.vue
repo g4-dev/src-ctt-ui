@@ -27,7 +27,6 @@ export default {
   },
   props: ['transcript'],
   mounted() {
-    console.log('test')
   },
   methods: {
     click(transcript) {
