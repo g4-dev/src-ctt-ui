@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-text-field
-            :value="keyItem.key"
-            append-icon="mdi-delete"
-            solo
-            @click:append="deleteKey"
+      :value="keyItem.key"
+      append-icon="mdi-delete"
+      solo
+      @click:append="deleteKey"
     >
     </v-text-field>
   </div>
@@ -15,13 +15,11 @@ export default {
   name: 'Keys',
   props: ['keyItem'],
   methods: {
-    deleteKey () {
+    deleteKey() {
       alert('click:append')
     },
   },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
