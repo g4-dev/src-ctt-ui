@@ -52,11 +52,11 @@ const router = new VueRouter({
 })
 
 // Redirect if not logged
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    if (store.getters['auth/isLogged']) {
+    if (await store.getters['auth/isLogged']) {
       next()
     } else {
       next({

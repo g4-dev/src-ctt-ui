@@ -1,8 +1,9 @@
 import axios from 'axios'
-import { getCookie } from '@/utils/getCookie'
+import { getToken, setToken } from '../utils/token'
 
 const singleton = Symbol('apiCtt')
 const singletonEnforcer = Symbol('apiCttEnforcer')
+console.log(getToken())
 
 class ApiService {
   constructor(enforcer) {
@@ -12,10 +13,11 @@ class ApiService {
 
     this.session = axios.create({
       baseURL: `${process.env.VUE_APP_API}`,
+      //withCredentials: true,
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${getCookie('token')}`,
+        Authorization: `Bearer ${getToken('token')}`,
       },
     })
   }
@@ -35,13 +37,18 @@ class ApiService {
   patch = (...params) => this.session.patch(...params)
   remove = (...params) => this.session.delete(...params)
 
+  async checkLogin() {
+    return { data: await this.get('/'), token: getToken() }
+  }
+
   async auth({ name, token }) {
     const payload = await this.post('login', {
       token: token,
       name: name,
     })
 
-    this.session.defaults.headers.common['Authorization'] = payload.data.token
+    setToken(payload.data.token)
+    this.session.defaults.headers.Authorization = `Bearer ${payload.data.token}`
 
     return payload
   }

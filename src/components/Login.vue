@@ -19,7 +19,7 @@
               />
               <v-text-field
                 v-model="token"
-                :rules="keyRules"
+                :rules="tokenRules"
                 label="Clé d'accès"
                 append-icon="mdi-arrow-right-bold-circle-outline"
                 @click:append="validate"
@@ -52,7 +52,7 @@ export default {
       (v) =>
         (v && v.length >= 4) || 'Le nom doit être supérieur à 4 caractères',
     ],
-    keyRules: [
+    tokenRules: [
       (v) => !!v || 'La clé est requise',
       (v) =>
         (v && v.length >= 10) || 'La clé doit être supérieure à 10 caractères',
@@ -62,12 +62,12 @@ export default {
     console.log(this)
   },
   methods: {
-    ...mapMutations('auth', ['loginAction']),
+    ...mapMutations('auth', ['login']),
     validate() {
       if (this.$refs.form.validate()) {
         const data = api.auth({ name: this.name, token: this.token })
         if (data) {
-          this.loginAction(data)
+          this.login(data)
           this.$router.push('/')
         } else {
           this.alert = true

@@ -5,10 +5,11 @@ const state = {
 }
 
 const actions = {
-  import({ commit }, data) {
-    console.log(data)
-    commit('loginAction', data)
-    commit('disconnectAction', data)
+  disconnectAction({ commit }, data) {
+    commit('disconnect', data)
+  },
+  loggingAction({ commit }, data) {
+    commit('login', data)
   },
 }
 
@@ -17,12 +18,12 @@ const getters = {
 }
 
 const mutations = {
-  loginAction(state, { token, expire }) {
+  login(state, { token, expire }) {
     state.isLogged = true
     state.token = token
     state.expire = expire
   },
-  disconnectAction(state) {
+  disconnect(state) {
     state.isLogged = false
     state.token = ''
     state.expire = ''
