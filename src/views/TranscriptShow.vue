@@ -1,6 +1,10 @@
 <template>
   <div class="pa-10 js-transcripts-transcript-container">
     <v-card class="mx-auto js-transcripts-transcript-edit-card" max-width="900">
+      <div v-if="transcript.live" class="pa-6 live">
+        <v-icon color="red">{{ icon }}</v-icon>
+        <span><strong>Live</strong></span>
+      </div>
       <v-card-text class="pa-6 fc-black">
         {{ transcript.message }}
       </v-card-text>
@@ -14,6 +18,7 @@ export default {
   data() {
     return {
       transcript: [],
+      icon: 'mdi-eye',
     }
   },
   created() {},
@@ -32,6 +37,9 @@ export default {
 </script>
 
 <style scoped>
+.live {
+  color: rgb(244, 67, 54);
+}
 .js-transcripts-transcript-edit-card {
   height: 100%;
   background-color: gainsboro;

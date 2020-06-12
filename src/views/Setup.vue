@@ -3,9 +3,20 @@
 </template>
 
 <script>
-// Composant wizard d'initialisation de l'application
+import { mapState } from 'vuex'
+
 export default {
   name: 'Setup',
+  components: {},
+  computed: {
+    ...mapState('auth', ['isLogged']),
+  },
+  mounted() {},
+  data() {
+    return {
+      right: null,
+    }
+  },
 }
 </script>
 

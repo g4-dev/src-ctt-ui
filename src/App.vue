@@ -1,28 +1,35 @@
 <template>
   <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
     <v-content>
-      <Navbar></Navbar>
+      <Navbar v-if="isLogged"></Navbar>
       <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
+import Navbar from './components/Navbar.vue'
+import { mapState } from 'vuex'
+import loginHelper from './utils/loginHelper'
+
 export default {
   name: 'App',
   components: {
     Navbar,
   },
-  computed: {
-    theme() {
-      return this.$vuetify.theme.dark ? 'dark' : 'light'
-    },
-  },
   data() {
     return {
       right: null,
     }
+  },
+  computed: {
+    theme() {
+      return this.$vuetify.theme.dark ? 'dark' : 'light'
+    },
+    ...mapState('auth', ['isLogged']),
+  },
+  created: async function () {
+    loginHelper()
   },
 }
 </script>

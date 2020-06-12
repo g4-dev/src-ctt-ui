@@ -1,15 +1,9 @@
 import axios from 'axios'
+import { getToken, setToken } from '../utils/token'
 
 const singleton = Symbol('apiCtt')
 const singletonEnforcer = Symbol('apiCttEnforcer')
-
-// TODO : use for security (need back end)
-// function readCookie(name) {
-//   const match = document.cookie.match(
-//     new RegExp('(^|;\\s*)(' + name + ')=([^;]*)')
-//   )
-//   return match ? decodeURIComponent(match[3]) : null
-// }
+console.log(getToken())
 
 class ApiService {
   constructor(enforcer) {
@@ -17,14 +11,14 @@ class ApiService {
       throw new Error('Cannot construct singleton')
     }
 
-    console.log(`API Service for ${location.protocol}//${location.host}/api`)
-
     this.session = axios.create({
-      baseURL: `${location.protocol}//${location.host}/api`,
+      baseURL: `${process.env.VUE_APP_API}`,
+      //withCredentials: true,
       headers: {
-        'X-Requested-With': 'XMLHttpRequest'
-        //'X-CSRFToken': readCookie('csrftoken')
-      }
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getToken('token')}`,
+      },
     })
   }
 
@@ -43,18 +37,20 @@ class ApiService {
   patch = (...params) => this.session.patch(...params)
   remove = (...params) => this.session.delete(...params)
 
-  auth(username, password) {
-    const loginEndpoint = `${this.baseURL}/login`
-    return this.post(
-      loginEndpoint,
-      {},
-      {
-        auth: {
-          username: username,
-          password: password
-        }
-      }
-    )
+  async checkLogin() {
+    return { data: await this.get('/'), token: getToken() }
+  }
+
+  async auth({ name, token }) {
+    const payload = await this.post('login', {
+      token: token,
+      name: name,
+    })
+
+    setToken(payload.data.token)
+    this.session.defaults.headers.Authorization = `Bearer ${payload.data.token}`
+
+    return payload
   }
 }
 

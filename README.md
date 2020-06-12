@@ -1,5 +1,7 @@
 # src-ctt-server-ui
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1538091e-2e70-4da2-b5d6-e81f6e8a1d1c/deploy-status)](https://app.netlify.com/sites/ctt-ui/deploys)
+
 Dashboard utilisant l'api deno
 
 Basé sur Vue et Vuetify avec :
