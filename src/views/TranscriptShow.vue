@@ -1,5 +1,8 @@
 <template>
   <div class="pa-10 js-transcripts-transcript-container">
+    <v-btn class="mx-2" fab dark small color="primary" @click="returnTranscript">
+      <v-icon dark>mdi-arrow-left</v-icon>
+    </v-btn>
     <v-card class="mx-auto js-transcripts-transcript-edit-card" max-width="900">
       <div v-if="transcript.live" class="pa-6 live">
         <v-icon color="red">{{icon}}</v-icon>
@@ -33,6 +36,11 @@ export default {
       this.transcript = JSON.parse(localStorage.getItem('transcript'))
     }
   },
+  methods: {
+    returnTranscript() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    }
+  }
 }
 </script>
 
