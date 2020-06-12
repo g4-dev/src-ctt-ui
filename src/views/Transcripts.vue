@@ -43,6 +43,7 @@
 
 <script>
 import Transcript from '@/components/Transcript'
+import api from '@/api'
 
 export default {
   name: 'Transcripts',
@@ -50,38 +51,7 @@ export default {
 
   data() {
     return {
-      dates: [],
-      menu: false,
-      transcripts: [
-        {
-          id: '1',
-          date: '16-10-2020',
-          message:
-            'test testtest testtesttesttesttesttest testtesttesttest testtesttesttesttesttest test test test 1',
-          live:0
-        },
-        {
-          id: '2',
-          date: '16-10-2020',
-          message:
-            'test testtest testtesttesttesttesttest testtesttesttest testtesttesttesttesttest 2',
-          live:0
-        },
-        {
-          id: '3',
-          date: '16-10-2020',
-          message:
-            'test testtest testtesttesttesttesttest testtesttesttest testtesttesttesttesttest 3',
-          live:1
-        },
-        {
-          id: '4',
-          date: '16-10-2020',
-          message:
-            'test testtest testtesttesttesttesttest testtesttesttest testtesttesttesttesttest 4',
-          live:0
-        },
-      ],
+      transcripts: api.get('/transcripts'),
     }
   },
   mounted() {

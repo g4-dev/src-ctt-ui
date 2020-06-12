@@ -1,7 +1,7 @@
 <template>
   <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
     <v-content>
-      <Navbar></Navbar>
+      <Navbar v-if="isLogged"></Navbar>
       <router-view></router-view>
     </v-content>
   </v-app>
@@ -9,6 +9,8 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import { mapState } from 'vuex'
+
 export default {
   name: 'App',
   components: {
@@ -18,7 +20,9 @@ export default {
     theme() {
       return this.$vuetify.theme.dark ? 'dark' : 'light'
     },
+    ...mapState('auth', ['isLogged', 'user']),
   },
+  mounted() {},
   data() {
     return {
       right: null,

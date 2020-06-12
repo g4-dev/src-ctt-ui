@@ -1,15 +1,8 @@
 import axios from 'axios'
+import { getCookie } from '@/utils/getCookie'
 
 const singleton = Symbol('apiCtt')
 const singletonEnforcer = Symbol('apiCttEnforcer')
-
-// TODO : use for security (need back end)
-// function readCookie(name) {
-//   const match = document.cookie.match(
-//     new RegExp('(^|;\\s*)(' + name + ')=([^;]*)')
-//   )
-//   return match ? decodeURIComponent(match[3]) : null
-// }
 
 class ApiService {
   constructor(enforcer) {
@@ -17,13 +10,12 @@ class ApiService {
       throw new Error('Cannot construct singleton')
     }
 
-    console.log('API Service for ctt-server')
-
     this.session = axios.create({
-      baseURL: `${process.env.VUE_APP_BASE_URL}/api`,
+      baseURL: `${process.env.VUE_APP_API}`,
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
-        //'X-CSRFToken': readCookie('csrftoken')
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getCookie('token')}`,
       },
     })
   }

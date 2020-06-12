@@ -14,17 +14,6 @@ module.exports = {
     },
   },
   devServer: {
-    proxy: {
-      '/api': {
-        target: process.env.VUE_APP_API,
-        changeOrigin: true,
-        secure: false,
-        cookieDomainRewrite: '',
-        onProxyReq: function (request, req) {
-          req.setHeader('origin', process.env.VUE_APP_BASE_URL)
-        },
-      },
-    },
     disableHostCheck: true,
   },
 }
