@@ -28,6 +28,12 @@ jobs:
         uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install
+
+      - name: Lint
+        uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: lint --max-warnings 0
+
       - name: build assets
         uses: borales/actions-yarn@v2.0.0
         with:
@@ -35,7 +41,3 @@ jobs:
       # - uses: borales/actions-yarn@v2.0.0
       #   with:
       #     cmd: tests
-      - name: Lint
-        uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: lint --max-warnings 0
