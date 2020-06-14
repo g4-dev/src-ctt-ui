@@ -1,0 +1,32 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    env:
+      CI: true
+      TOKEN: ${{ secrets.TOKEN }} # Always data token to deploy website
+      TARGET: /home/${{ secrets.USER_DEPLOY }}/${{ github.event.repository.name }}
+      # Deno vars
+      DENO_INSTALL: '/Users/runner/.local'
+
+    runs-on: ubuntu-16.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: build
+      # - uses: borales/actions-yarn@v2.0.0
+      #   with:
+      #     cmd: tests
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: lint
