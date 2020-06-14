@@ -58,9 +58,6 @@ export default {
         (v && v.length >= 10) || 'La clé doit être supérieure à 10 caractères',
     ],
   }),
-  created() {
-    console.log(this)
-  },
   methods: {
     ...mapMutations('auth', ['login']),
     validate() {

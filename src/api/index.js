@@ -3,7 +3,6 @@ import { getToken, setToken } from '../utils/token'
 
 const singleton = Symbol('apiCtt')
 const singletonEnforcer = Symbol('apiCttEnforcer')
-console.log(getToken())
 
 class ApiService {
   constructor(enforcer) {

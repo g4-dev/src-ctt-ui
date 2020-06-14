@@ -117,7 +117,6 @@ export default {
   methods: {
     submit() {
       alert('zizicoptere')
-      console.log(this.motherskey)
       this.disabled = true
     },
     initialize() {
