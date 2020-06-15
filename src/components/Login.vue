@@ -60,10 +60,11 @@ export default {
   }),
   methods: {
     ...mapMutations('auth', ['login']),
-    validate() {
+    async validate() {
       if (this.$refs.form.validate()) {
         const data = api.auth({ name: this.name, token: this.token })
-        if (data) {
+        console.log(data)
+        if (await data) {
           this.login(data)
           this.$router.push('/')
         } else {

@@ -5,8 +5,10 @@ import TranscriptShow from '../views/TranscriptShow.vue'
 import Access from '../views/ApiKeys.vue'
 import NotFound from '../views/error/NotFound.vue'
 import Login from '../views/VLogin.vue'
+import Logout from '../views/Logout.vue'
 import Setup from '../views/VSetup.vue'
 import store from '../store'
+import loginHelper from '../utils/loginHelper'
 
 Vue.use(VueRouter)
 
@@ -39,6 +41,11 @@ const routes = [
     component: Login,
   },
   {
+    path: '/logout',
+    name: 'Logout',
+    component: Logout,
+  },
+  {
     path: '*',
     name: 'NotFound',
     component: NotFound,
@@ -56,7 +63,7 @@ router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    if (await store.getters['auth/isLogged']) {
+    if ((await store.getters['auth/isLogged']) || (await loginHelper())) {
       next()
     } else {
       next({

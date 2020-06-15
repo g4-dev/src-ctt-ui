@@ -10,7 +10,6 @@
 <script>
 import Navbar from './components/Navbar.vue'
 import { mapState } from 'vuex'
-import loginHelper from './utils/loginHelper'
 
 export default {
   name: 'App',
@@ -27,9 +26,6 @@ export default {
       return this.$vuetify.theme.dark ? 'dark' : 'light'
     },
     ...mapState('auth', ['isLogged']),
-  },
-  created: async function () {
-    loginHelper()
   },
 }
 </script>
