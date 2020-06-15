@@ -63,7 +63,6 @@ export default {
     async validate() {
       if (this.$refs.form.validate()) {
         const data = api.auth({ name: this.name, token: this.token })
-        console.log(data)
         if (await data) {
           this.login(data)
           this.$router.push('/')
