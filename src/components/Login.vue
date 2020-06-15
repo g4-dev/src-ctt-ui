@@ -58,15 +58,12 @@ export default {
         (v && v.length >= 10) || 'La clé doit être supérieure à 10 caractères',
     ],
   }),
-  created() {
-    console.log(this)
-  },
   methods: {
     ...mapMutations('auth', ['login']),
-    validate() {
+    async validate() {
       if (this.$refs.form.validate()) {
         const data = api.auth({ name: this.name, token: this.token })
-        if (data) {
+        if (await data) {
           this.login(data)
           this.$router.push('/')
         } else {
