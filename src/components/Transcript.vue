@@ -8,7 +8,7 @@
       @click="click(transcript)"
     >
       <div class="js-transcripts-card-icon">
-        <div v-if="transcript.live">
+        <div v-if="transcript.status == progress">
           <div class="title-live"><strong>Live</strong></div>
           <v-icon style="width: 100%;" color="red">{{ icon }}</v-icon>
         </div>
