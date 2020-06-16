@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import api from '@/api'
 // Create the crud to manage and request new api keys
 export default {
   name: 'Access',
@@ -84,7 +85,7 @@ export default {
       { text: 'Clef', value: 'key', sortable: false },
       { text: 'Actions', value: 'actions', sortable: false },
     ],
-    users: [],
+    users: this.users,
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -116,18 +117,11 @@ export default {
 
   methods: {
     submit() {
-      alert('zizicoptere')
       this.disabled = true
     },
-    initialize() {
-      this.users = [
-        {
-          name: 'Frozen Yogurt',
-          key: 159,
-        },
-      ]
+    async initialize() {
+      this.users = (await api.get('/users')).data
     },
-
     editItem(item) {
       this.editedIndex = this.users.indexOf(item)
       this.editedItem = Object.assign({}, item)

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import TranscriptShow from '../views/TranscriptShow.vue'
 import Access from '../views/ApiKeys.vue'
+import ApiDoc from '../views/ApiDoc.vue'
 import NotFound from '../views/error/NotFound.vue'
 import Login from '../views/VLogin.vue'
 import Logout from '../views/Logout.vue'
@@ -17,6 +18,12 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/doc',
+    name: 'ApiDoc',
+    component: ApiDoc,
     meta: { requiresAuth: true },
   },
   {
@@ -54,7 +61,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
+  //base: process.env.VUE_APP_BASE_URL,
   routes,
 })
 

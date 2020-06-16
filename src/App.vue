@@ -22,10 +22,8 @@ export default {
     }
   },
   computed: {
-    theme() {
-      return this.$vuetify.theme.dark ? 'dark' : 'light'
-    },
     ...mapState('auth', ['isLogged']),
+    ...mapState('theme', ['theme']),
   },
 }
 </script>

@@ -12,7 +12,7 @@ class ApiService {
 
     this.session = axios.create({
       baseURL: `${process.env.VUE_APP_API}`,
-      //withCredentials: true,
+      withCredentials: false,
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Content-Type': 'application/json',
