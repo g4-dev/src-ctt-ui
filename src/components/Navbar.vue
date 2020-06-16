@@ -39,6 +39,7 @@ export default {
       items: [
         { title: 'Transcriptions', icon: 'mdi-view-list', url: '/' },
         { title: "Clés d'accès", icon: 'mdi-key', url: '/access' },
+        { title: 'Documentation', icon: 'mdi-file-document', url: '/doc' },
       ],
       right: null,
     }

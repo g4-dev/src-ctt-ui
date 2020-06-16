@@ -1,35 +1,27 @@
 export const THEMES = {
-  dark: 'dark',
-  light: 'light',
+  DARK: 'dark',
+  LIGHT: 'light',
 }
 
 const state = {
-  theme: THEMES.light,
+  theme: THEMES.DARK,
 }
 
 const actions = {
-  import({ commit }, { allowedTypes, theme, ...data } = null) {
-    commit('init', data)
-    commit('setTheme', theme)
-    commit('setAllowedTypes', allowedTypes)
+  setTheme({ commit }, data) {
+    commit('setTheme', data)
   },
 }
 
 const getters = {
-  isDefaultTheme: ({ theme }) => theme === THEMES.dark,
-  isLightTheme: (state, getters) => !getters.isDefaultTheme,
+  isDefaultTheme: ({ theme }) => theme === THEMES.DARK,
+  isLightTheme: (state, getters) => !getters.isDefaultTheme(),
 }
 
 const mutations = {
-  init(state, { theme }) {
-    state.theme = theme
-  },
   setTheme(state, theme) {
     const formatedtheme = (theme && String(theme).toUpperCase()) || null
-    state.theme = theme[formatedtheme] || theme.dark
-  },
-  setAllowedTypes(state, allowedTypes) {
-    state.allowedTypes = allowedTypes
+    state.theme = theme[formatedtheme] || theme.DARK
   },
 }
 

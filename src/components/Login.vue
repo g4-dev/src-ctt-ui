@@ -62,11 +62,15 @@ export default {
     ...mapMutations('auth', ['login']),
     async validate() {
       if (this.$refs.form.validate()) {
-        const data = api.auth({ name: this.name, token: this.token })
-        if (await data) {
-          this.login(data)
-          this.$router.push('/')
-        } else {
+        try {
+          const data = await api.auth({ name: this.name, token: this.token })
+          if (data) {
+            this.login(data)
+            this.$router.push('/')
+          } else {
+            throw Error('Error while fetching API')
+          }
+        } catch (e) {
           this.alert = true
         }
       }

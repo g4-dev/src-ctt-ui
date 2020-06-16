@@ -7,7 +7,7 @@ Vue.use(Vuetify)
 
 export default new Vuetify({
   icons: {
-    iconfont: 'las', // default - only for display purposes
+    iconfont: 'las',
   },
   theme: {
     light: {
