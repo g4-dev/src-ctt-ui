@@ -50,25 +50,24 @@ export default {
   components: { Transcript },
   data() {
     return {
-      transcript: null,
+      transcripts: null,
       dates: null,
       menu: '',
     }
   },
   methods: {
-    async getTranscripts() {
-      console.log(this.getTranscripts())
-      return await api.get('/transcripts')
-    },
+    // async getTranscripts() {
+    //   console.log(this.getTranscripts())
+    //   return await api.get('/transcripts')
+    // },
   },
   async mounted() {
     try {
-      let response = await api.get('/transcripts')
-      this.transcript = response
-    } catch (err) {
+      await api.get('/transcripts').then(response => (this.transcripts = response.data))
+    } catch(err){
       console.log(err)
     }
-  },
+  }
 }
 </script>
 
