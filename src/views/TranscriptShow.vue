@@ -1,38 +1,36 @@
 <template>
   <div class="pa-10 js-transcripts-transcript-container">
     <v-card class="mx-auto js-transcripts-transcript-edit-card" max-width="900">
-      <div v-if="transcript.live" class="pa-6 live">
+      <div v-if="transcript.status == progress" class="pa-6 live">
         <v-icon color="red">{{ icon }}</v-icon>
         <span><strong>Live</strong></span>
       </div>
       <v-card-text class="pa-6 fc-black">
-        {{ transcript.message }}
+        {{ transcript.content }}
       </v-card-text>
     </v-card>
   </div>
 </template>
 
 <script>
+  import api from '@/api'
 export default {
   name: 'TranscriptShow',
   data() {
     return {
-      transcript: [],
+      transcript: null,
       icon: 'mdi-eye',
     }
   },
   created() {},
-  mounted() {
-    if (
-      JSON.parse(localStorage.getItem('transcript')) &&
-      JSON.parse(localStorage.getItem('transcript')).id
-    ) {
-      this.transcript = JSON.parse(localStorage.getItem('transcript'))
-    } else {
-      localStorage.transcript = JSON.stringify(this.$route.query.transcript)
-      this.transcript = JSON.parse(localStorage.getItem('transcript'))
+  async mounted() {
+    try {
+      console.log(api.get('/transcripts/' + this.$route.params.id).then(response => (this.transcript = response.data)))
+      await api.get('/transcript/' + this.$route.params.id).then(response => (this.transcript = response.data))
+    } catch(err){
+      console.log(err)
     }
-  },
+  }
 }
 </script>
 

@@ -40,7 +40,6 @@ export default {
       self.$router.push({
         name: 'TranscriptShow',
         params: { id: transcript.id },
-        query: { transcript: transcript },
       })
     },
   },
