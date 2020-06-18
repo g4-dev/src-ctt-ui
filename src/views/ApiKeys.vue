@@ -115,6 +115,7 @@ export default {
   methods: {
     async initialize() {
       await api.get('/users').then(response => (this.users = (response.data)))
+      await console.log(this.users)
     },
     editItem(item) {
       this.editedIndex = this.users.indexOf(item)

@@ -10,7 +10,7 @@
         <span><strong>Live</strong></span>
       </div>
       <v-card-text class="pa-6 fc-black">
-        {{ transcript.content }}
+        {{ transcript.text_path }}
       </v-card-text>
     </v-card>
   </div>
