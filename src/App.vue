@@ -21,6 +21,20 @@ export default {
       right: null,
     }
   },
+  created: function() {
+    console.log("Starting connection to WebSocket Server")
+    this.connection = new WebSocket("ws://localhost:8082")
+
+    this.connection.onmessage = function(event) {
+      console.log(event.data);
+    }
+
+    this.connection.onopen = function(event) {
+      console.log(event)
+      console.log("Successfully connected to the echo websocket server...")
+    }
+
+  },
   computed: {
     ...mapState('auth', ['isLogged']),
     ...mapState('theme', ['theme']),

@@ -64,7 +64,6 @@ export default {
   async mounted() {
     try {
       await api.get('/transcripts').then(response => (this.transcripts = response.data))
-      await console.log(this.transcripts)
     } catch(err){
       console.log(err)
     }

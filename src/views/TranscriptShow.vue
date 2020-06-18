@@ -10,7 +10,7 @@
         <span><strong>Live</strong></span>
       </div>
       <v-card-text class="pa-6 fc-black">
-        {{ transcript.text_path }}
+        <a v-bind:href="transcriptPath">Text</a>
       </v-card-text>
     </v-card>
   </div>
@@ -24,13 +24,14 @@ export default {
     return {
       transcript: null,
       icon: 'mdi-eye',
+      content:''
     }
   },
   created() {},
   async mounted() {
     try {
-      console.log(api.get('/transcripts/' + this.$route.params.id).then(response => (this.transcript = response.data)))
       await api.get('/transcript/' + this.$route.params.id).then(response => (this.transcript = response.data))
+      this.content = api.get(this.transcriptPath())
     } catch(err){
       console.log(err)
     }
@@ -38,6 +39,11 @@ export default {
   methods: {
     returnTranscript() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+    }
+  },
+  computed: {
+    transcriptPath: function () {
+      return process.env.VUE_APP_API+'/uploads/'+this.transcript.text_file
     }
   }
 }
