@@ -62,23 +62,11 @@ export default {
         .then((response) => (this.transcripts = response.data))
     },
   },
-  async created() {
-    console.log('Starting connection to WebSocket Server')
-    this.connection = new WebSocket(process.env.VUE_APP_WS_IP)
-
-    // event returned by api is uuid
-    this.connection.onmessage = function (event) {
-      this.getTranscripts()
-      console.log(this.transcripts[event])
-    }
-
-    this.connection.onopen = function (event) {
-      console.log(event)
-      console.log('Successfully connected to the echo websocket server...')
-    }
-  },
   async mounted() {
     this.getTranscripts()
+    setInterval(function () {
+      this.getTranscripts()
+    }, 30000)
   },
 }
 </script>

@@ -24,6 +24,9 @@
         <v-icon color="red">{{ icon }}</v-icon>
         <span><strong>Live</strong></span>
       </div>
+      <p class="fc-black pa-10">
+        {{ content }}
+      </p>
     </v-card>
   </div>
 </template>
@@ -34,50 +37,77 @@ export default {
   name: 'TranscriptShow',
   data() {
     return {
-      transcript: {},
+      transcript: {
+        status: 'none',
+        uuid: '',
+        text_file: '',
+        audio_file: '',
+      },
+      live: null,
       icon: 'mdi-eye',
-      text_content: '',
+      content: '',
       audio_dl: '',
       types: ['audio_file', 'text_file'],
     }
   },
-  async created() {
+  computed: {
+    progressing() {
+      return this.transcript.status === 'progress'
+    },
+  },
+  created() {
     try {
-      await this.getTranscript(this.$route.params.id)
-      console.log(this.transcript)
-      this.content = api.get(this.transcriptPath('text_file'))
+      this.getTranscript(this.$route.params.id).then((val) => {
+        const connectLink = `${process.env.VUE_APP_WS_IP}?uuid=${val.uuid}`
+        const progressing = val.status === 'progress'
+
+        console.log(progressing)
+        if (!this.progressing || !progressing) {
+          this.readTextFromApi()
+        } else {
+          if (this.live) this.live.close()
+          this.live = new WebSocket(connectLink)
+          this.live.onopen = (event) => {
+            console.log(event)
+            this.live.send('zreiofiozre')
+            console.log(
+              'Successfully connected to the echo websocket server...'
+            )
+          }
+
+          this.live.onmessage = ({ data }) => {
+            this.content += data
+            console.log(data)
+          }
+        }
+      })
     } catch (err) {
       console.log(err)
     }
   },
-  mounted() {
-    console.log('Starting connection to WebSocket Server')
-    this.connection = new WebSocket(
-      `${process.env.VUE_APP_WS_IP}?uuid=${this.transcript.uuid}`
-    )
-
-    // event returned by api is uuid
-    this.connection.onmessage = function (event) {
-      console.log(this.transcripts[event])
-    }
-
-    this.connection.onopen = function (event) {
-      console.log(event)
-      console.log('Successfully connected to the echo websocket server...')
-    }
-  },
   methods: {
+    receiveText(ev) {
+      console.log('received ui :', ev)
+    },
+    async readTextFromApi() {
+      this.content = (
+        await api.post('/transcripts/read-text', {
+          path: this.transcript['text_file'],
+        })
+      ).data
+    },
     returnTranscript() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
     },
     async getTranscript(id) {
-      this.transcript = (await api.get(`/transcripts/${id}`)).data
+      return (this.transcript = (await api.get(`/transcripts/${id}`)).data)
     },
     transcriptPath: function (type) {
-      if (this.types.includes(type)) {
+      if (!this.types.includes(type)) {
         return '#'
       }
-      return process.env.VUE_APP_API + '/uploads/' + this.transcript[type]
+
+      return process.env.VUE_APP_API + '/' + this.transcript[type]
     },
   },
 }
