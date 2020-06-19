@@ -7,7 +7,6 @@ import ApiDoc from '../views/ApiDoc.vue'
 import NotFound from '../views/error/NotFound.vue'
 import Login from '../views/VLogin.vue'
 import Logout from '../views/Logout.vue'
-import Test from '../views/Test.vue'
 import Setup from '../views/VSetup.vue'
 import store from '../store'
 import loginHelper from '../utils/loginHelper'
@@ -25,12 +24,6 @@ const routes = [
     path: '/doc',
     name: 'ApiDoc',
     component: ApiDoc,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: Test,
     meta: { requiresAuth: true },
   },
   {

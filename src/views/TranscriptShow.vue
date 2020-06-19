@@ -60,28 +60,40 @@ export default {
       return this.transcript.status === 'progress'
     },
   },
-  beforeCreate() {
-    this.$connect(`${process.env.VUE_APP_WS_IP}`) //?uuid=${this.transcript.uuid}
-  },
   created() {
     this.getTranscript(this.$route.params.id).then(async (val) => {
-      this.content = (
-        await api.post('/transcripts/read-text', {
-          path: val['text_file'],
-        })
-      ).data
       this.transcript.status = val.status
+      if (this.progressing()) {
+        this.content = await this.readTextFromApi(val)
+      }
+      this.transcript.uuid = val.uuid
     })
-    setTimeout(() => console.log('Wait ws response'), 2000)
+  },
+  mounted() {
+    setTimeout(() => console.log('Wait ws response'), 1000)
+    this.$connect(`${process.env.VUE_APP_WS_IP}?uuid=${this.transcript.uuid}`)
+    this.$socket.addEventListener('open', function (ev) {
+      console.log('connecting', ev)
+      this.$socket.send('Ui connected')
+    })
 
+    setTimeout(() => console.log('Wait ws message'), 1000)
     this.$socket.addEventListener('message', function (event) {
-      console.log(event.data)
-      this.content = this.content + '\n' + event.data
+      this.content += event.data
       console.log(this.content)
     })
   },
   methods: {
-    //async readTextFromApi() {},
+    /**
+     * @param transcript Read text from transcript
+     */
+    async readTextFromApi(transcript) {
+      return (
+        await api.post('/transcripts/read-text', {
+          path: transcript['text_file'],
+        })
+      ).data
+    },
     returnTranscript() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
     },
