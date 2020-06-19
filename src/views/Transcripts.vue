@@ -2,25 +2,25 @@
   <div>
     <div class="js-transcripts-datepicker">
       <v-menu
-        ref="menu"
-        v-model="menu"
-        :close-on-content-click="false"
-        :return-value.sync="dates"
-        transition="scale-transition"
-        offset-y
-        min-width="290px"
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="dates"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-combobox
-            v-model="dates"
-            multiple
-            chips
-            small-chips
-            label="Choisir une date"
-            prepend-icon="event"
-            readonly
-            v-bind="attrs"
-            v-on="on"
+                  v-model="dates"
+                  multiple
+                  chips
+                  small-chips
+                  label="Choisir une date"
+                  prepend-icon="event"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
           ></v-combobox>
         </template>
         <v-date-picker v-model="dates" multiple no-title scrollable>
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       transcripts: null,
-      dates: null,
+      dates: [],
       menu: '',
     }
   },
