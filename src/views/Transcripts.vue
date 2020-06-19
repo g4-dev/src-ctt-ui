@@ -50,21 +50,23 @@ export default {
   components: { Transcript },
   data() {
     return {
+      transcripts: null,
       dates: null,
+      menu: '',
     }
   },
-  computed: {
-    transcripts() {
-      return this.getTranscripts()
-    },
+  mounted() {
+    this.getTranscripts()
+    setInterval(function () {
+      this.getTranscripts()
+    }, 30000)
   },
   methods: {
     async getTranscripts() {
-      return await api.get('/transcripts')
+      return await api
+        .get('/transcripts')
+        .then((response) => (this.transcripts = response.data))
     },
-  },
-  mounted() {
-    localStorage.removeItem('transcript')
   },
 }
 </script>

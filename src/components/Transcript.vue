@@ -8,7 +8,7 @@
       @click="click(transcript)"
     >
       <div class="js-transcripts-card-icon">
-        <div v-if="transcript.live">
+        <div v-if="transcript.status == progress">
           <div class="title-live"><strong>Live</strong></div>
           <v-icon style="width: 100%;" color="red">{{ icon }}</v-icon>
         </div>
@@ -17,13 +17,16 @@
 
       <div class="js-transcripts-card-content">
         <p>{{ transcript.id }}</p>
-        <p>{{ transcript.created_at }}</p>
+        <p>{{ transcript.created_at | moment }}</p>
       </div>
     </v-card>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+import 'moment/locale/fr' // without this line it didn't work
+moment.locale('fr')
 export default {
   name: 'Transcript',
   data() {
@@ -40,8 +43,12 @@ export default {
       self.$router.push({
         name: 'TranscriptShow',
         params: { id: transcript.id },
-        query: { transcript: transcript },
       })
+    },
+  },
+  filters: {
+    moment: function (date) {
+      return moment(date).format('lll')
     },
   },
 }
