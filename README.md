@@ -19,6 +19,8 @@ Basé sur Vue et Vuetify avec :
 
 ## Project setup
 
+`cd app`
+
 ```
 yarn install
 ```

@@ -1,0 +1,23 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "eslint.enable": true,
+  "eslint.packageManager": "yarn",
+  "eslint.workingDirectories": ["./src"],
+  "eslint.validate": ["javascript", "vue"],
+  "eslint.alwaysShowStatus": true,
+  "javascript.validate.enable": false,
+  "prettier.packageManager": "yarn",
+  "vetur.format.defaultFormatter.js": "vscode-typescript",
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  "path-intellisense.extensionOnImport": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "deno.enable": false
+}
