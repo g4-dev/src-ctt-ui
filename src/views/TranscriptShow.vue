@@ -10,7 +10,7 @@
     >
       <v-icon dark>mdi-arrow-left</v-icon>
     </v-btn>
-    <div v-if="transcript.status !== 'progress'">
+    <div v-if="!progressing">
       <v-card-text class="pa-6 fc-black">
         <a v-bind:href="transcriptPath('text_file')">Text</a>
       </v-card-text>
@@ -20,7 +20,7 @@
     </div>
 
     <v-card class="mx-auto js-transcripts-transcript-edit-card" max-width="900">
-      <div v-if="transcript.status === 'progress'" class="pa-6 live">
+      <div v-if="progressing" class="pa-6 live">
         <v-icon color="red">{{ icon }}</v-icon>
         <span><strong>Live</strong></span>
       </div>
@@ -71,16 +71,14 @@ export default {
     this.$connect(`${process.env.VUE_APP_WS_IP}?uuid=${this.transcript.uuid}`)
   },
   mounted() {
-    setTimeout(() => console.log('Wait ws response'), 1000)
     this.$socket.addEventListener('open', function (ev) {
       console.log('connecting', ev)
+      this.$socket.send('Ui connected')
     })
-    //this.$socket.send('Ui connected')
-
-    setTimeout(() => console.log('Wait ws message'), 1000)
+    setTimeout(() => console.log('Wait ws response'), 1000)
     this.$socket.addEventListener('message', function (event) {
-      this.content += event.data
-      console.log(this.content)
+      const parsedData = `\n${String(event.data)}`
+      this.content += parsedData
     })
   },
   methods: {
