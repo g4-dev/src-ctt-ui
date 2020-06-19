@@ -9405,6 +9405,11 @@ vue-moment@^4.1.0:
   dependencies:
     moment "^2.19.2"
 
+vue-native-websocket@^2.0.14:
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/vue-native-websocket/-/vue-native-websocket-2.0.14.tgz#fddb56f9f93d2ecc861486ee3c8f29506ea2a168"
+  integrity sha512-oK8+xG1gmqRs4JngHGwEc4zWoRjsdMB20Sz8pemkh4lW2Vr2676/cDRtd30aGnO2xF7Oxf003wS5JO0kypUsCw==
+
 vue-router@^3.1.6:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.3.2.tgz#0099de402edb2fe92f9711053ab5a2156f239cad"

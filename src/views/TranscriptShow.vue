@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       transcript: {
-        status: 'none',
+        status: 'progress',
         uuid: '',
         text_file: '',
         audio_file: '',
@@ -50,52 +50,38 @@ export default {
       types: ['audio_file', 'text_file'],
     }
   },
+  watch: {
+    content() {
+      return this.content
+    },
+  },
   computed: {
     progressing() {
       return this.transcript.status === 'progress'
     },
   },
-  created() {
-    try {
-      this.getTranscript(this.$route.params.id).then((val) => {
-        const connectLink = `${process.env.VUE_APP_WS_IP}?uuid=${val.uuid}`
-        const progressing = val.status === 'progress'
-
-        console.log(progressing)
-        if (!this.progressing || !progressing) {
-          this.readTextFromApi()
-        } else {
-          if (this.live) this.live.close()
-          this.live = new WebSocket(connectLink)
-          this.live.onopen = (event) => {
-            console.log(event)
-            this.live.send('zreiofiozre')
-            console.log(
-              'Successfully connected to the echo websocket server...'
-            )
-          }
-
-          this.live.onmessage = ({ data }) => {
-            this.content += data
-            console.log(data)
-          }
-        }
-      })
-    } catch (err) {
-      console.log(err)
-    }
+  beforeCreate() {
+    this.$connect(`${process.env.VUE_APP_WS_IP}`) //?uuid=${this.transcript.uuid}
   },
-  methods: {
-    receiveText(ev) {
-      console.log('received ui :', ev)
-    },
-    async readTextFromApi() {
+  created() {
+    this.getTranscript(this.$route.params.id).then(async (val) => {
       this.content = (
         await api.post('/transcripts/read-text', {
-          path: this.transcript['text_file'],
+          path: val['text_file'],
         })
       ).data
-    },
+      this.transcript.status = val.status
+    })
+    setTimeout(() => console.log('Wait ws response'), 2000)
+
+    this.$socket.addEventListener('message', function (event) {
+      console.log(event.data)
+      this.content = this.content + '\n' + event.data
+      console.log(this.content)
+    })
+  },
+  methods: {
+    //async readTextFromApi() {},
     returnTranscript() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
     },
