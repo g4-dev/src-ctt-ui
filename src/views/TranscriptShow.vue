@@ -63,19 +63,19 @@ export default {
   created() {
     this.getTranscript(this.$route.params.id).then(async (val) => {
       this.transcript.status = val.status
-      if (this.progressing()) {
+      if (this.transcript.status !== 'progress') {
         this.content = await this.readTextFromApi(val)
       }
       this.transcript.uuid = val.uuid
     })
+    this.$connect(`${process.env.VUE_APP_WS_IP}?uuid=${this.transcript.uuid}`)
   },
   mounted() {
     setTimeout(() => console.log('Wait ws response'), 1000)
-    this.$connect(`${process.env.VUE_APP_WS_IP}?uuid=${this.transcript.uuid}`)
     this.$socket.addEventListener('open', function (ev) {
       console.log('connecting', ev)
-      this.$socket.send('Ui connected')
     })
+    //this.$socket.send('Ui connected')
 
     setTimeout(() => console.log('Wait ws message'), 1000)
     this.$socket.addEventListener('message', function (event) {

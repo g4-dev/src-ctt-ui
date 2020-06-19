@@ -55,18 +55,18 @@ export default {
       menu: '',
     }
   },
+  mounted() {
+    this.getTranscripts()
+    setInterval(function () {
+      this.getTranscripts()
+    }, 30000)
+  },
   methods: {
     async getTranscripts() {
       return await api
         .get('/transcripts')
         .then((response) => (this.transcripts = response.data))
     },
-  },
-  async mounted() {
-    this.getTranscripts()
-    setInterval(function () {
-      this.getTranscripts()
-    }, 30000)
   },
 }
 </script>
