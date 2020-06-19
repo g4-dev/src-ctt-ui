@@ -1,0 +1,25 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
+  // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+
+  // List of extensions which should be recommended for users of this workspace.
+  "recommendations": [
+    // Linter
+    "dbaeumer.vscode-eslint", // Eslint js linter
+    "drknoxy.eslint-disable-snippets", // Disable Some Eslint rules
+    // Formatter
+    "esbenp.prettier-vscode", // Js|Ts Formatter
+    "syler.sass-indented", // Format Sass
+    "esbenp.prettier-vscode", // less formatter
+    "dbaeumer.vscode-eslint", // ESLint: JS CodeSniffer
+    "numso.prettier-standard-vscode", // JS Formatter
+    // Global
+    "EditorConfig.EditorConfig", // Global formatter
+    // Lang / framework
+    "hollowtree.vue-snippets",
+    "vuetifyjs.vuetify-vscode",
+    "octref.vetur"
+  ],
+  // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
+  "unwantedRecommendations": []
+}
