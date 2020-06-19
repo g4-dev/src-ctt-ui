@@ -17,16 +17,16 @@
 
       <div class="js-transcripts-card-content">
         <p>{{ transcript.id }}</p>
-        <p>{{ transcript.created_at   | moment}}</p>
+        <p>{{ transcript.created_at | moment }}</p>
       </div>
     </v-card>
   </div>
 </template>
 
 <script>
-  import moment from 'moment'
-  import 'moment/locale/fr'  // without this line it didn't work
-  moment.locale('fr')
+import moment from 'moment'
+import 'moment/locale/fr' // without this line it didn't work
+moment.locale('fr')
 export default {
   name: 'Transcript',
   data() {
@@ -48,9 +48,9 @@ export default {
   },
   filters: {
     moment: function (date) {
-      return moment(date).format('lll');
-    }
-  }
+      return moment(date).format('lll')
+    },
+  },
 }
 </script>
 

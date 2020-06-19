@@ -63,7 +63,7 @@
 export default {
   data: () => ({
     key: '',
-    valid: true,    
+    valid: true,
     alert: false,
     formulaire: true,
     clefMere: 'ofvnobjnezo-561rze-orneg-ree1e-geb15-ergionb120510',
