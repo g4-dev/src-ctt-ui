@@ -6,7 +6,7 @@
   "editor.formatOnSave": true,
   "eslint.enable": true,
   "eslint.packageManager": "yarn",
-  "eslint.workingDirectories": ["./src"],
+  "eslint.workingDirectories": ["./app"],
   "eslint.validate": ["javascript", "vue"],
   "eslint.alwaysShowStatus": true,
   "javascript.validate.enable": false,

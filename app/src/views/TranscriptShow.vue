@@ -51,8 +51,10 @@ export default {
     }
   },
   watch: {
-    content() {
-      return this.content
+    socket() {
+      this.$socket.addEventListener('message', function ({ data }) {
+        this.content += data
+      })
     },
   },
   computed: {
@@ -71,16 +73,8 @@ export default {
     this.$connect(`${process.env.VUE_APP_WS_IP}?uuid=${this.transcript.uuid}`)
   },
   mounted() {
-    setTimeout(() => console.log('Wait ws response'), 1000)
-    this.$socket.addEventListener('open', function (ev) {
-      console.log('connecting', ev)
-    })
-    //this.$socket.send('Ui connected')
-
-    setTimeout(() => console.log('Wait ws message'), 1000)
-    this.$socket.addEventListener('message', function (event) {
-      this.content += event.data
-      console.log(this.content)
+    this.$socket.addEventListener('open', function () {
+      this.$socket.send('Ui connected')
     })
   },
   methods: {
