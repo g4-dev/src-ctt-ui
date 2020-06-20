@@ -51,8 +51,10 @@ export default {
     }
   },
   watch: {
-    content() {
-      return this.content
+    socket() {
+      this.$socket.addEventListener('message', function ({ data }) {
+        this.content += data
+      })
     },
   },
   computed: {

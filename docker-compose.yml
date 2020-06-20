@@ -1,9 +1,18 @@
 version: "3.7"
 services:
   web:
-    build: vuejs
+    build: .
     ports:
-      - 8080:8080
+      - 80:8080
+    networks:
+      - lcom
     volumes:
       - ./app:/app
-      - /app/node_modules
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=ctt_server"
+      - "traefik.frontend.rule=Host:ctt-ui.loicroux.com"
+
+networks:
+  lcom:
+    external: true
