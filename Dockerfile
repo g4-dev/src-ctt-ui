@@ -12,8 +12,9 @@ RUN mkdir -p /var/www/html
 COPY .confs/nginx.conf /etc/nginx/nginx.conf
 COPY .confs/default.conf /etc/nginx/conf.d/default.conf
 
+# Dir mounted
 WORKDIR /app
-COPY app/ .
+
 RUN yarn global add @vue/cli
 RUN yarn install
 RUN yarn build
