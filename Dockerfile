@@ -11,7 +11,8 @@ RUN mkdir -p /var/www/html
 # Copy the respective nginx configuration files
 COPY .confs/nginx.conf /etc/nginx/nginx.conf
 COPY .confs/default.conf /etc/nginx/conf.d/default.conf
-
+# project
+COPY ./app /app
 # Dir mounted
 WORKDIR /app
 
