@@ -21,28 +21,33 @@
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
-
         <v-list-item-content>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <template v-slot:append>
+      <v-btn medium fab @click="$store.dispatch('theme/toggle')">
+        <v-icon>mdi-moon</v-icon>
+      </v-btn>
+    </template>
   </v-navigation-drawer>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+import { parseMenuFromRouter } from '../utils/menu'
+
 export default {
   name: 'Navbar',
-
   data() {
     return {
-      items: [
-        { title: 'Transcriptions', icon: 'mdi-view-list', url: '/' },
-        { title: "Clés d'accès", icon: 'mdi-key', url: '/access' },
-        { title: 'Documentation', icon: 'mdi-file-document', url: '/doc' },
-      ],
+      items: parseMenuFromRouter(),
       right: null,
     }
+  },
+  actions: {
+    ...mapMutations('theme', ['toggleTheme']),
   },
 }
 </script>

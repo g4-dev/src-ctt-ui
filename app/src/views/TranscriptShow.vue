@@ -12,9 +12,6 @@
     </v-btn>
     <div v-if="!progressing">
       <v-card-text class="pa-6 fc-black">
-        <a v-bind:href="transcriptPath('text_file')">Text</a>
-      </v-card-text>
-      <v-card-text class="pa-6 fc-black">
         <a v-bind:href="transcriptPath('audio_file')">Audio</a>
       </v-card-text>
     </div>
@@ -24,21 +21,21 @@
         <v-icon color="red">{{ icon }}</v-icon>
         <span><strong>Live</strong></span>
       </div>
-      <p class="fc-black pa-10">
-        {{ content }}
-      </p>
+      <p class="fc-black pa-10" v-html="content"></p>
     </v-card>
   </div>
 </template>
 
 <script>
 import api from '@/api'
+import { parseText } from '../utils/text'
+
 export default {
   name: 'TranscriptShow',
   data() {
     return {
       transcript: {
-        status: 'progress',
+        status: 'canceled',
         uuid: '',
         text_file: '',
         audio_file: '',
@@ -46,15 +43,18 @@ export default {
       live: null,
       icon: 'mdi-eye',
       content: '',
-      audio_dl: '',
       types: ['audio_file', 'text_file'],
     }
   },
   watch: {
     socket() {
-      this.$socket.addEventListener('message', function ({ data }) {
-        this.content += data
-      })
+      if (this.transcript.status === 'progress') {
+        let self = this
+        self.$socket.addEventListener('message', function ({ data }) {
+          const parsedData = parseText(data)
+          self.content += parsedData
+        })
+      }
     },
   },
   computed: {
@@ -70,29 +70,27 @@ export default {
       }
       this.transcript.uuid = val.uuid
     })
-    this.$connect(`${process.env.VUE_APP_WS_IP}?uuid=${this.transcript.uuid}`)
+    if (this.transcript.status === 'progress') {
+      this.$connect(`${process.env.VUE_APP_WS_IP}?uuid=${this.transcript.uuid}`)
+    }
   },
   mounted() {
-    this.$socket.addEventListener('open', function (ev) {
-      console.log('connecting', ev)
-      this.$socket.send('Ui connected')
-    })
-    setTimeout(() => console.log('Wait ws response'), 1000)
-    this.$socket.addEventListener('message', function (event) {
-      const parsedData = `\n${String(event.data)}`
-      this.content += parsedData
-    })
+    let self = this
+    if (this.transcript.status === 'progress') {
+      self.$socket.addEventListener('open', function (ev) {
+        console.log('connecting', ev)
+        self.$socket.send('Ui connected')
+      })
+    }
   },
   methods: {
     /**
-     * @param transcript Read text from transcript
+     * @param transcript Read transcript text
      */
     async readTextFromApi(transcript) {
-      return (
-        await api.post('/transcripts/read-text', {
-          path: transcript['text_file'],
-        })
-      ).data
+      return parseText(
+        (await api.get(`/transcripts/text/${transcript.id}`)).data
+      )
     },
     returnTranscript() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')

@@ -23,7 +23,7 @@ const mutations = {
     state.token = token
     state.expire = expire
   },
-  disconnect(state) {
+  logout(state) {
     state.isLogged = false
     state.token = ''
     state.expire = ''

@@ -3,7 +3,7 @@ import Vue from 'vue'
 
 Vue.use(VueNativeSock, process.env.VUE_APP_WS_IP, {
   connectManually: true,
-  reconnection: true,
+  reconnection: false,
   format: 'json',
   reconnectionDelay: 2000,
 })

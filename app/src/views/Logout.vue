@@ -10,6 +10,8 @@ export default {
   mounted() {
     setToken('')
     this.$router.push({ name: 'Login' })
+    this.$store.dispatch('auth/logout')
+    window.location.reload()
   },
 }
 </script>

@@ -2,25 +2,25 @@
   <div>
     <div class="js-transcripts-datepicker">
       <v-menu
-              ref="menu"
-              v-model="menu"
-              :close-on-content-click="false"
-              :return-value.sync="dates"
-              transition="scale-transition"
-              offset-y
-              min-width="290px"
+        ref="menu"
+        v-model="menu"
+        :close-on-content-click="false"
+        :return-value.sync="dates"
+        transition="scale-transition"
+        offset-y
+        min-width="290px"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-combobox
-                  v-model="dates"
-                  multiple
-                  chips
-                  small-chips
-                  label="Choisir une date"
-                  prepend-icon="event"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
+            v-model="dates"
+            multiple
+            chips
+            small-chips
+            label="Choisir une date"
+            prepend-icon="event"
+            readonly
+            v-bind="attrs"
+            v-on="on"
           ></v-combobox>
         </template>
         <v-date-picker v-model="dates" multiple no-title scrollable>
@@ -56,13 +56,10 @@ export default {
     }
   },
   mounted() {
-    this.getTranscripts()
-    setInterval(function () {
-      this.getTranscripts()
-    }, 30000)
+    this.getTranscript()
   },
   methods: {
-    async getTranscripts() {
+    async getTranscript() {
       return await api
         .get('/transcripts')
         .then((response) => (this.transcripts = response.data))

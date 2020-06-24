@@ -16,21 +16,21 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    name: 'Transcriptions',
     component: Home,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: '/doc',
-    name: 'ApiDoc',
-    component: ApiDoc,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, inMenu: true, icon: 'mdi-view-list' },
   },
   {
     path: '/access',
-    name: 'Access',
+    name: "Clés d'accès",
     component: Access,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, inMenu: true, icon: 'mdi-key' },
+  },
+  {
+    path: '/doc',
+    name: 'Documentation',
+    component: ApiDoc,
+    meta: { requiresAuth: true, inMenu: true, icon: 'mdi-file-document' },
   },
   {
     path: '/transcript/show/:id',

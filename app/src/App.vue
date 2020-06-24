@@ -2,24 +2,32 @@
   <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
     <v-content>
       <Navbar v-if="isLogged"></Navbar>
-      <router-view></router-view>
+      <v-container>
+        <Header></Header>
+        <router-view></router-view>
+      </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue'
+import Header from './components/Header.vue'
 import { mapState } from 'vuex'
 
 export default {
   name: 'App',
   components: {
     Navbar,
+    Header,
   },
   data() {
     return {
       right: null,
     }
+  },
+  created() {
+    this.$store.dispatch('theme/setTheme', localStorage.getItem('theme'))
   },
   computed: {
     ...mapState('auth', ['isLogged']),

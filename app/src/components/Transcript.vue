@@ -39,8 +39,7 @@ export default {
   },
   methods: {
     click(transcript) {
-      var self = this
-      self.$router.push({
+      this.$router.push({
         name: 'TranscriptShow',
         params: { id: transcript.id },
       })
