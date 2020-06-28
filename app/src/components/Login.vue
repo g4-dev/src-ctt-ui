@@ -1,11 +1,11 @@
 <template>
   <v-container fluid grid-list-md text-center>
-    <v-alert v-model="alert" dark color="red">
-      La clé n'est pas bonne !
+    <v-alert v-model="hasAlert" dark color="red">
+      {{ alert }}
     </v-alert>
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
-        <v-card id="carteLogin" class="mx-auto transparent">
+        <v-card id="carteLogin" class="mx-auto">
           <v-card-title class="justify-center headline">
             Call2Text
           </v-card-title>
@@ -44,7 +44,7 @@ import api from '@/api'
 export default {
   data: () => ({
     valid: true,
-    alert: false,
+    alert: null,
     name: '',
     token: '',
     nameRules: [
@@ -58,20 +58,26 @@ export default {
         (v && v.length >= 10) || 'La clé doit être supérieure à 10 caractères',
     ],
   }),
+  computed: {
+    hasAlert() {
+      return this.alert !== null
+    },
+  },
   methods: {
     ...mapMutations('auth', ['login']),
     async validate() {
       if (this.$refs.form.validate()) {
         try {
           const data = await api.auth({ name: this.name, token: this.token })
-          if (data) {
+          if (data.status === 200) {
             this.login(data)
+            api.checkLogin()
             this.$router.push('/')
           } else {
             throw Error('Error while fetching API')
           }
         } catch (e) {
-          this.alert = true
+          this.alert = e.message
         }
       }
     },

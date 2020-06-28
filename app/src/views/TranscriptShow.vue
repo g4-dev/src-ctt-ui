@@ -68,10 +68,10 @@ export default {
       if (this.transcript.status !== 'progress') {
         this.content = await this.readTextFromApi(val)
       }
-      this.transcript.uuid = val.uuid
+      this.transcript = val
     })
     if (this.transcript.status === 'progress') {
-      this.$connect(`${process.env.VUE_APP_WS_IP}?uuid=${this.transcript.uuid}`)
+      this.$connect(`${process.env.VUE_APP_WS_IP}?id=${this.transcript.id}`)
     }
   },
   mounted() {

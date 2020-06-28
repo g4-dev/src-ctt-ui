@@ -12,6 +12,13 @@ Basé sur Vue et Vuetify avec :
 
 ## Requirements
 
+## TODO
+
+- prod back end en ssl / tls
+- traduction i18n
+- v-slot header : injecter des composants
+- notifications
+
 > Merci d'installer les même version exactes à la mineure près
 
 - `yarn` 1.22.4 &rarr; [download](https://classic.yarnpkg.com/fr/docs/install/)

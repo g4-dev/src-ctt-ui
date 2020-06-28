@@ -1,17 +1,13 @@
-import vuetify from '@/plugins/vuetify'
-
-export const THEMES = {
-  DARK: 'dark',
-  LIGHT: 'light',
-}
+import vuetifyInstance from '@/plugins/vuetify'
+const vuetify = vuetifyInstance.framework
 
 const state = {
-  theme: THEMES.DARK,
+  dark: true,
 }
 
 const actions = {
-  setTheme({ commit }, data) {
-    commit('setTheme', data)
+  initTheme({ commit }, data) {
+    commit('initTheme', data)
   },
   toggle({ commit }) {
     commit('toggle')
@@ -19,31 +15,21 @@ const actions = {
 }
 
 const getters = {
-  isDarkTheme: ({ theme }) => theme === THEMES.DARK,
-  isLightTheme: (state, getters) => !getters.isDarkTheme(),
+  isDarkTheme: ({ dark }) => dark === true,
+  isLightTheme: ({ dark }) => !dark,
 }
 
 const mutations = {
-  setTheme(state, theme) {
-    theme = theme || localStorage.getItem('theme') || THEMES.DARK
-    const formatedtheme = String(theme).toUpperCase()
-    state.theme = THEMES[formatedtheme]
-    localStorage.setItem('theme', theme)
-    vuetify.theme.dark = state.theme === THEMES.DARK ? true : false
-    vuetify.theme.light = state.theme === THEMES.LIGHT ? true : false
+  initTheme(state) {
+    vuetify.theme.dark =
+      JSON.parse(localStorage.getItem('themeIsDark')) ?? state.dark
+    state.dark = vuetify.theme.dark
+    localStorage.setItem('themeIsDark', vuetify.theme.dark)
   },
   toggle(state) {
-    if (this.getters['theme/isDarkTheme']) {
-      state.theme = THEMES.LIGHT
-      localStorage.setItem('theme', THEMES.LIGHT)
-      vuetify.theme.light = true
-      vuetify.theme.dark = true
-    } else {
-      state.theme = THEMES.DARK
-      localStorage.setItem('theme', THEMES.DARK)
-      vuetify.theme.dark = true
-      vuetify.theme.light = true
-    }
+    vuetify.theme.dark = !vuetify.theme.dark
+    state.dark = vuetify.theme.dark
+    localStorage.setItem('themeIsDark', vuetify.theme.dark)
   },
 }
 

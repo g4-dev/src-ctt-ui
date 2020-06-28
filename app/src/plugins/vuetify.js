@@ -11,19 +11,28 @@ export default new Vuetify({
     iconfont: 'mdi',
   },
   theme: {
-    light: {
-      primary: colors.blue,
-      secondary: '#b0bec5',
-      accent: '#8c9eff',
-      error: '#b71c1c',
-      background: colors.grey.lighten5,
+    dark: true,
+    themes: {
+      light: {
+        primary: colors.blue,
+        secondary: '#b0bec5',
+        accent: colors.grey.darken4,
+        error: '#b71c1c',
+        background: colors.grey.lighten2,
+      },
+      dark: {
+        primary: colors.blue,
+        secondary: '#b0bec5',
+        accent: '#8c9eff',
+        error: '#b71c1c',
+        background: colors.grey.darken4,
+      },
     },
-    dark: {
-      primary: colors.blue,
-      secondary: '#b0bec5',
-      accent: '#8c9eff',
-      error: '#b71c1c',
-      background: colors.grey.darken4,
+    options: {
+      themeCache: {
+        get: (key) => localStorage.getItem(key),
+        set: (key, value) => localStorage.setItem(key, value),
+      },
     },
   },
 })

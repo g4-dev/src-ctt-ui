@@ -5,11 +5,11 @@ import TranscriptShow from '../views/TranscriptShow.vue'
 import Access from '../views/ApiKeys.vue'
 import ApiDoc from '../views/ApiDoc.vue'
 import NotFound from '../views/error/NotFound.vue'
-import Login from '../views/VLogin.vue'
-import Logout from '../views/Logout.vue'
+import Login from '../components/Login.vue'
 import Setup from '../views/VSetup.vue'
 import store from '../store'
 import loginHelper from '../utils/loginHelper'
+import { setToken } from '../utils/token'
 
 Vue.use(VueRouter)
 
@@ -50,7 +50,13 @@ const routes = [
   {
     path: '/logout',
     name: 'Logout',
-    component: Logout,
+    beforeEnter: (to, from, next) => {
+      setToken('')
+      store.dispatch('auth/logout')
+      next({
+        path: '/login',
+      })
+    },
   },
   {
     path: '*',

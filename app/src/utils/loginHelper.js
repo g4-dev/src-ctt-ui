@@ -12,7 +12,7 @@ export default async function () {
     return true
   } catch (e) {
     setToken(null)
-    store.commit('auth/disconnect')
+    store.commit('auth/logout')
     return false
   }
 }

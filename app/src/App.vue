@@ -1,5 +1,11 @@
 <template>
-  <v-app :style="{ background: $vuetify.theme.themes[theme].background }">
+  <v-app
+    :style="
+      isLightTheme
+        ? { background: $vuetify.theme.themes['light'].background }
+        : ''
+    "
+  >
     <v-content>
       <Navbar v-if="isLogged"></Navbar>
       <v-container>
@@ -13,7 +19,7 @@
 <script>
 import Navbar from './components/Navbar.vue'
 import Header from './components/Header.vue'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
@@ -27,11 +33,11 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('theme/setTheme', localStorage.getItem('theme'))
+    this.$store.dispatch('theme/initTheme')
   },
   computed: {
-    ...mapState('auth', ['isLogged']),
-    ...mapState('theme', ['theme']),
+    ...mapGetters('auth', ['isLogged']),
+    ...mapGetters('theme', ['isLightTheme']),
   },
 }
 </script>

@@ -5,10 +5,10 @@ const state = {
 }
 
 const actions = {
-  disconnectAction({ commit }, data) {
-    commit('disconnect', data)
+  logout({ commit }, data) {
+    commit('logout', data)
   },
-  loggingAction({ commit }, data) {
+  login({ commit }, data) {
     commit('login', data)
   },
 }
