@@ -1,10 +1,10 @@
 <template>
   <div class="pa-6">
-    <v-alert v-show="success" type="success">
-      L'utilisateur a été supprimé avec succès
+    <v-alert v-show="success" type="success" dismissible>
+      L'utilisateur a été {{ dialogText[method] }} avec succès
     </v-alert>
-    <v-alert v-show="error" type="error">
-      Une erreur est survenue
+    <v-alert v-show="error" type="error" dismissible>
+      {{ error }}
     </v-alert>
     <v-data-table :headers="headers" :items="users" class="elevation-1">
       <template v-slot:top>
@@ -51,7 +51,6 @@
                   </v-row>
                 </v-container>
               </v-card-text>
-
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="close">Annulez</v-btn>
@@ -85,10 +84,9 @@ export default {
     disabled: false,
     success: false,
     error: false,
-
     dialogText: {
-      create: 'Créer',
-      delete: 'Suppression',
+      create: 'créer',
+      delete: 'supprimer',
     },
     method: 'create', // possible : "delete"
     methodArgs: [],
@@ -131,16 +129,16 @@ export default {
     /**
      * @method
      */
-    delete(item) {
+    async delete(item) {
       const index = this.users.indexOf(item)
       try {
-        api.remove(`/users/${item.id}`, {
+        await api.remove(`/users/${item.id}`, {
           headers: { master_key: this.editedItem.master },
         })
         this.success = true
         this.users.splice(index, 1)
       } catch (e) {
-        this.error = true
+        this.error = e.message
       }
       // Don't forget close these events
       this.methodArgs = null
@@ -149,15 +147,15 @@ export default {
     /**
      * @method
      */
-    create() {
+    async create() {
       try {
-        api.get(`/users/create?name=${this.editedItem.name}`, {
+        await api.get(`/users/create?name=${this.editedItem.name}`, {
           headers: { master_key: this.editedItem.master },
         })
         this.users.push(this.editedItem)
         this.success = true
       } catch (e) {
-        this.error = true
+        this.error = e.message
       }
       // Don't forget close these events
       this.methodArgs = null

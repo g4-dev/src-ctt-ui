@@ -1,5 +1,8 @@
 <template>
   <div class="pa-10 js-transcripts-transcript-container">
+    <v-alert v-show="error" type="error" dismissible>
+      {{ error }}
+    </v-alert>
     <v-btn
       class="mx-2"
       fab
@@ -36,50 +39,41 @@ export default {
     return {
       transcript: {
         status: 'canceled',
-        uuid: '',
+        id: '',
         text_file: '',
         audio_file: '',
       },
-      live: null,
+      error: null,
       icon: 'mdi-eye',
       content: '',
       types: ['audio_file', 'text_file'],
     }
-  },
-  watch: {
-    socket() {
-      if (this.transcript.status === 'progress') {
-        let self = this
-        self.$socket.addEventListener('message', function ({ data }) {
-          const parsedData = parseText(data)
-          self.content += parsedData
-        })
-      }
-    },
   },
   computed: {
     progressing() {
       return this.transcript.status === 'progress'
     },
   },
-  created() {
-    this.getTranscript(this.$route.params.id).then(async (val) => {
-      this.transcript.status = val.status
-      if (this.transcript.status !== 'progress') {
-        this.content = await this.readTextFromApi(val)
+  async created() {
+    this.transcript = await this.getTranscript(this.$route.params.id)
+    if (!this.progressing) {
+      this.content = await this.readTextFromApi()
+    }
+    if (this.progressing) {
+      try {
+        this.$connect(`${process.env.VUE_APP_WS_IP}?id=${this.transcript.id}`)
+      } catch (e) {
+        this.error = e.message
       }
-      this.transcript = val
-    })
-    if (this.transcript.status === 'progress') {
-      this.$connect(`${process.env.VUE_APP_WS_IP}?id=${this.transcript.id}`)
     }
   },
   mounted() {
-    let self = this
-    if (this.transcript.status === 'progress') {
-      self.$socket.addEventListener('open', function (ev) {
-        console.log('connecting', ev)
-        self.$socket.send('Ui connected')
+    if (this.progressing) {
+      this.$socket.addEventListener('open', function () {
+        this.$socket.send('Ui connected')
+      })
+      this.$socket.addEventListener('message', function ({ data }) {
+        this.content += parseText(data)
       })
     }
   },
@@ -87,9 +81,9 @@ export default {
     /**
      * @param transcript Read transcript text
      */
-    async readTextFromApi(transcript) {
+    async readTextFromApi() {
       return parseText(
-        (await api.get(`/transcripts/text/${transcript.id}`)).data
+        (await api.get(`/transcripts/text/${this.transcript.id}`)).data
       )
     },
     returnTranscript() {
